@@ -4,41 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListWithChatsActivity">
+    tools:context=".ListWithChatsActivity"
+    android:background="@color/cardview_dark_background">
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chats"
-        android:layout_width="392dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginBottom="31dp"
-        app:layout_constraintBottom_toTopOf="@+id/add_id_in_db"
+        android:layout_width="387dp"
+        android:layout_height="318dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
         tools:listitem="@layout/chat" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="48dp"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_id_in_db"
         tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/add_id_in_db"
         android:layout_width="271dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:layout_height="48dp"
+        android:layout_marginTop="76dp"
+        android:background="@drawable/round_edittext"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chats"
+        app:layout_constraintVertical_bias="0.027"
         tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="56dp"
+        android:background="@color/black"
+        android:text="поменять id"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

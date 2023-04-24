@@ -67,7 +67,7 @@ class ChatActivity:AppCompatActivity() {
 
 //        testButtonForTable = findViewById(R.id.button)
         context = applicationContext
-        arrayOfKeys = AppealToDataBase(context).searchKeyInTable()
+        arrayOfKeys = AppealToDataBase(context).searchKeyInTable(receivedData)
         privateKey = MessageEncryption().toPrivateKey(arrayOfKeys[1])!!
         publicKey = MessageEncryption().toPublicKey(arrayOfKeys[0])!!
         messageButton.setOnClickListener {
@@ -104,8 +104,8 @@ class ChatActivity:AppCompatActivity() {
                 GlobalScope.launch {
                     val newPublicKey = getingKey(receivedData)
                     MessageEncryption().toPublicKey(newPublicKey)
-                        ?.let { it1 -> AppealToDataBase(context).updateValue(arrayOfKeys[0], it1) }
-                    arrayOfKeys = AppealToDataBase(context).searchKeyInTable()
+                        ?.let { it1 -> AppealToDataBase(context).updateValueByName(receivedData, it1) }
+                    arrayOfKeys = AppealToDataBase(context).searchKeyInTable(receivedData)
                     privateKey = MessageEncryption().toPrivateKey(arrayOfKeys[1])!!
                     publicKey = MessageEncryption().toPublicKey(arrayOfKeys[0])!!
                 }
@@ -123,9 +123,9 @@ class ChatActivity:AppCompatActivity() {
                 true
             }
             R.id.action_delete -> {
-                AppealToDataBase(context).deleteDB()
+                AppealToDataBase(context).deleteDB(receivedData)
                 Toast.makeText(this, "Ключи удалены", Toast.LENGTH_SHORT).show()
-                arrayOfKeys = AppealToDataBase(context).searchKeyInTable()
+                arrayOfKeys = AppealToDataBase(context).searchKeyInTable(receivedData)
                 privateKey = MessageEncryption().toPrivateKey(arrayOfKeys[1])!!
                 publicKey = MessageEncryption().toPublicKey(arrayOfKeys[0])!!
                 true
@@ -163,28 +163,34 @@ class ChatActivity:AppCompatActivity() {
 }
 class AppealToDataBase(val context: Context) {
     @RequiresApi(Build.VERSION_CODES.O)
-     fun insertValue() {
+     fun insertValue(name: String) {
         val database = DataBase(context).writableDatabase
         val messageEncryption = MessageEncryption()
         val privateKey = messageEncryption.privateKey
         val publicKey = messageEncryption.publicKey
         val values = ContentValues().apply {
+            put(GuestEntry.name, name)
             put(GuestEntry.primaryKey, "${messageEncryption.keyToString(privateKey)}")
             put(GuestEntry.publicKey, "${messageEncryption.keyToString(publicKey)}")
         }
         val newRowId = database.insert(GuestEntry.NAME, null, values)
     }
 
-    private fun readValue(): MutableList<String> {
+    private fun readValue(name: String): MutableList<String> {
         var primaryKeyString: String = ""
         var publicKeyString: String = ""
         val database = DataBase(context).readableDatabase
         val projection = arrayOf(GuestEntry.ID, GuestEntry.primaryKey, GuestEntry.publicKey)
+
+        // Добавьте параметры выборки и аргументы выборки
+        val selection = "${GuestEntry.name} = ?"
+        val selectionArgs = arrayOf(name)
+
         val cursor = database.query(
             GuestEntry.NAME,
             projection,
-            null,
-            null,
+            selection,
+            selectionArgs,
             null,
             null,
             null
@@ -203,35 +209,44 @@ class AppealToDataBase(val context: Context) {
         return mutableListOf(publicKeyString, primaryKeyString)
     }
 
+
     @RequiresApi(Build.VERSION_CODES.O)
-    fun searchKeyInTable(): MutableList<String> {
-        val listWithKey = readValue()
+    fun searchKeyInTable(name: String): MutableList<String> {
+        val listWithKey = readValue(name)
         println(listWithKey[0])
         if (listWithKey[0] != "" && listWithKey[1] != "") return listWithKey
         else {
-            insertValue()
-            return readValue()
+            insertValue(name)
+            return readValue(name)
         }
     }
 
-     fun deleteDB() {
+    fun deleteDB(name: String) {
         val database = DataBase(context).writableDatabase
-        database.delete(GuestEntry.NAME, null, null)
+        val selection = "${GuestEntry.name}=?"
+        val selectionArgs = arrayOf(name)
+
+        database.delete(GuestEntry.NAME, selection, selectionArgs)
     }
 
+
     @RequiresApi(Build.VERSION_CODES.O)
-     fun updateValue(oldKey: String, publicKey: PublicKey) {
+    fun updateValueByName(name: String, publicKey: PublicKey) {
         val database = DataBase(context).writableDatabase
         val messageEncryption = MessageEncryption()
         Log.d("public", publicKey.toString())
+
         val values = ContentValues().apply {
             put(GuestEntry.publicKey, "${messageEncryption.keyToString(publicKey)}")
         }
-        val selection = "${GuestEntry.ID} = ?"
-        println(GuestEntry.ID)
-        val selectionArgs = arrayOf(getFirstID().toString())
+
+        // Используем имя вместо ID для выборки
+        val selection = "${GuestEntry.name} = ?"
+        val selectionArgs = arrayOf(name)
+
         val updatedRows = database.update(GuestEntry.NAME, values, selection, selectionArgs)
     }
+
     @SuppressLint("Range")
     fun getFirstID(): Int {
         val database = DataBase(context).readableDatabase

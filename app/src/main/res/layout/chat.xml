@@ -8,21 +8,22 @@
 
     <TextView
         android:id="@+id/messages_textview_right"
-        android:layout_width="93dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:background="@drawable/round_background"
-        android:textColor="@color/teal_200"/>
+        android:textColor="@color/teal_200"
+        android:padding="10dp"/>
 
 
     <TextView
         android:id="@+id/messages_textview_left"
-        android:layout_width="131dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:textSize="16sp"
         android:background="@drawable/round_background"
         android:textColor="@color/teal_700"
-        />
+        android:padding="10dp"/>
 
 </LinearLayout>

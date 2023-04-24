@@ -19,10 +19,12 @@ class ListWithChatsActivity : AppCompatActivity(), ChatsAdapter.OnItemClickListe
     private lateinit var button: Button
     private lateinit var editText: EditText
     private lateinit var adapter: ChatsAdapter
+    private lateinit var button2: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_with_chats)
         button = findViewById(R.id.button)
+        button2 = findViewById(R.id.button2)
         editText = findViewById(R.id.add_id_in_db)
         val chatRecycler = findViewById<RecyclerView>(R.id.chats)
         val layoutManager = LinearLayoutManager(this)
@@ -38,12 +40,21 @@ class ListWithChatsActivity : AppCompatActivity(), ChatsAdapter.OnItemClickListe
             val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         }
+        button2.setOnClickListener {
+            val sharedPreferences = getSharedPreferences("id", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.remove("id")
+            editor.apply()
+            val intent = Intent(this@ListWithChatsActivity, EnterIdActivity::class.java)
+            startActivity(intent)
+        }
     }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(text: String) {
         // Обработка нажатия на элемент здесь
         val intent = Intent(this@ListWithChatsActivity, ChatActivity::class.java)
         intent.putExtra("key", text)
+        AppealToDataBase(this).searchKeyInTable(text)
         startActivity(intent)
         Toast.makeText(this, "Item clicked: $text", Toast.LENGTH_SHORT).show()
     }
