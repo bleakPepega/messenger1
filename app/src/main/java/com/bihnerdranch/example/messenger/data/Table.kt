@@ -9,6 +9,7 @@ class HotelContract private constructor() {
         const val name = "name"
         const val publicKey = "publicKey"
         const val primaryKey = "primaryKey"
+        const val aesKey = "aesKey"
         const val ID = BaseColumns._ID
     }
 }

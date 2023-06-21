@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/messages_textview_right"
@@ -12,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:background="@drawable/round_background"
-        android:textColor="@color/teal_200"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:textColor="@color/teal_200" />
 
 
     <TextView
@@ -21,9 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:textSize="16sp"
         android:background="@drawable/round_background"
+        android:padding="10dp"
         android:textColor="@color/teal_700"
-        android:padding="10dp"/>
+        android:textSize="16sp" />
+
+
 
 </LinearLayout>

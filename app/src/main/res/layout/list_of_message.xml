@@ -4,24 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_dark_background">
+    android:background="@color/cardview_dark_background"
+    android:fitsSystemWindows="true"
+    android:theme="@style/CardView.Dark">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_recycler"
-        android:layout_width="406dp"
-        android:layout_height="662dp"
-        app:layout_constraintBottom_toTopOf="@+id/edit_text_for_send_messages"
+        android:layout_width="402dp"
+        android:layout_height="592dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/chat" />
+
 
     <EditText
         android:id="@+id/edit_text_for_send_messages"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="281dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
@@ -31,26 +34,49 @@
         android:textColor="@color/teal_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_for_send_messages"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_for_send_messages"
-        android:layout_width="60dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="46dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="4dp"
         android:background="@drawable/send"
-        android:backgroundTint="@color/black"
+        android:tint="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/edit_text_for_send_messages"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/send_file_button"
+        android:layout_width="51dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/send_file"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/edit_text_for_send_messages"
+        app:layout_constraintHorizontal_bias="0.153"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/test_button"
         android:layout_width="86dp"
         android:layout_height="38dp"
-        android:layout_marginStart="320dp"
         android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button777"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/edit_text_for_send_messages"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

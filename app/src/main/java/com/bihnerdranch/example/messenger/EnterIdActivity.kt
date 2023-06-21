@@ -2,8 +2,11 @@ package com.bihnerdranch.example.messenger
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 
@@ -22,7 +25,15 @@ class EnterIdActivity : AppCompatActivity() {
                 val editor = sharedPreferences.edit()
                 editor.putString("id", textBar.text.toString())
                 editor.apply()
+                val intent = Intent(this@EnterIdActivity, ListWithChatsActivity::class.java)
+                startActivity(intent)
 
+            }
+        }
+        textBar.setOnFocusChangeListener { _, hasFocus ->
+            when (hasFocus) {
+                true -> textBar.setText("")
+                false -> textBar.setText("Enter id")
             }
         }
     }

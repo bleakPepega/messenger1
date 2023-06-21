@@ -36,7 +36,9 @@ class MainActivity : AppCompatActivity() {
     fun nextActivity(view: View) {
         val intent = Intent(this@MainActivity, ChatActivity::class.java)
         startActivity(intent)
+
     }
+
 
 
 

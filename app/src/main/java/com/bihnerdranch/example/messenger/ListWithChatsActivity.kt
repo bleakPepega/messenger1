@@ -1,10 +1,14 @@
 package com.bihnerdranch.example.messenger
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -14,18 +18,21 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.io.File
 
 class ListWithChatsActivity : AppCompatActivity(), ChatsAdapter.OnItemClickListener {
     private lateinit var button: Button
     private lateinit var editText: EditText
     private lateinit var adapter: ChatsAdapter
     private lateinit var button2: Button
+    private lateinit var button3: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_with_chats)
         button = findViewById(R.id.button)
         button2 = findViewById(R.id.button2)
         editText = findViewById(R.id.add_id_in_db)
+        button3 = findViewById(R.id.test)
         val chatRecycler = findViewById<RecyclerView>(R.id.chats)
         val layoutManager = LinearLayoutManager(this)
         adapter = ChatsAdapter(mutableListOf(), this)
@@ -48,7 +55,15 @@ class ListWithChatsActivity : AppCompatActivity(), ChatsAdapter.OnItemClickListe
             val intent = Intent(this@ListWithChatsActivity, EnterIdActivity::class.java)
             startActivity(intent)
         }
+        editText.setOnFocusChangeListener {_, hasFocus ->
+            when(hasFocus){
+                true -> editText.setText("")
+                false -> editText.setText("enter id нового пользователя")
+            }
+        }
     }
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(text: String) {
         // Обработка нажатия на элемент здесь

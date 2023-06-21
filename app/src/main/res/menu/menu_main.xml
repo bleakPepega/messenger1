@@ -14,4 +14,12 @@
         android:title="delete"
         android:id="@+id/action_delete"
         />
+    <item
+        android:id="@+id/action_get_AES_key"
+        android:title="getAes"
+        />
+    <item
+        android:id="@+id/action_send_AES_key"
+        android:title="sendAes"
+        />
 </menu>
